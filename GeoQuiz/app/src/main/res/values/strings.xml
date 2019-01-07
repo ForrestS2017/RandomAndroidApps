@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">GeoQuiz</string>
-    <string name="question_California">California borders the Alantic Ocean</string>
+    <string name="question_California">California borders the Atlantic Ocean</string>
     <string name="question_NewJersey">Trenton is the capital of NJ</string>
     <string name="question_Texas">Texas has a higher standard of living than NY</string>
     <string name="question_Washington">Washington D.C. is in Washington State</string>
     <string name="true_button">True!</string>
     <string name="false_button">False!</string>
-    <string name="corret_toast">Correct :D</string>
+    <string name="correct_toast">Correct :D</string>
     <string name="incorrect_toast">Wrong!</string>
     <string name="next_button">Next</string>
     <string name="previous_button">Previous</string>
