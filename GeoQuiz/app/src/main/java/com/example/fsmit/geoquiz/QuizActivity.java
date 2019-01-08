@@ -1,5 +1,6 @@
 package com.example.fsmit.geoquiz;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -77,6 +78,9 @@ public class QuizActivity extends AppCompatActivity {
         mCheatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(QuizActivity.this, "New Activity!", Toast.LENGTH_LONG);
+                Intent intent = new Intent(QuizActivity.this, CheatActivity.class);
+                startActivity(intent);
 
             }
         });
