@@ -79,11 +79,12 @@ public class QuizActivity extends AppCompatActivity {
         mCheatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(QuizActivity.this, "You're Cheating!", Toast.LENGTH_LONG);
+                centerToast(
+                        Toast.makeText(QuizActivity.this, "You're Cheating! >:(", Toast.LENGTH_LONG)
+                ).show();
                 boolean answerIsTrue = mQuestionBank[mCurrentIndex].isAnswerTrue();
                 Intent intent = CheatActivity.newIntent(QuizActivity.this, answerIsTrue);
                 startActivity(intent);
-
             }
         });
 
@@ -156,14 +157,25 @@ public class QuizActivity extends AppCompatActivity {
         // Make message to display score. Create a new LinearLayout to center text
         String msg = new StringBuilder( getResources().getString(responseID) ).append("\n").append(totalCorrect).append("/").append(totalQuestions).append(" correct").toString();
 
+        //Make toast and center it
         Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
+        centerToast(toast).show();
+
+        return correctAnswer == userPressedTrue;
+    }
+
+    /**
+     * Center toast via layout up-casted toast
+     * @param toast toast to be centered
+     */
+    private Toast centerToast(Toast toast) {
         LinearLayout layout = (LinearLayout) toast.getView();
         if (layout.getChildCount() > 0) {
             TextView tv = (TextView) layout.getChildAt(0);
             tv.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
         }
-        toast.show();
-
-        return correctAnswer == userPressedTrue;
+        return toast;
     }
+
+
 }
