@@ -1,5 +1,6 @@
 package com.example.fsmit.geoquiz;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -78,8 +79,9 @@ public class QuizActivity extends AppCompatActivity {
         mCheatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(QuizActivity.this, "New Activity!", Toast.LENGTH_LONG);
-                Intent intent = new Intent(QuizActivity.this, CheatActivity.class);
+                Toast.makeText(QuizActivity.this, "You're Cheating!", Toast.LENGTH_LONG);
+                boolean answerIsTrue = mQuestionBank[mCurrentIndex].isAnswerTrue();
+                Intent intent = CheatActivity.newIntent(QuizActivity.this, answerIsTrue);
                 startActivity(intent);
 
             }
@@ -117,7 +119,6 @@ public class QuizActivity extends AppCompatActivity {
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putInt(KEY_INDEX, mCurrentIndex);
-
     }
 
     /**
