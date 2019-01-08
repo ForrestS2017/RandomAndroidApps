@@ -15,7 +15,7 @@ public class QuizActivity extends AppCompatActivity {
     private static final String TAG = "QuizActivity";
     private static final String KEY_INDEX = "index";
 
-    private Button mTrueButton, mFalseButton;
+    private Button mTrueButton, mFalseButton, mCheatButton;
     private TextView mQuestionTextView;
     private Question[] mQuestionBank = new Question[] {
             new Question(R.string.question_California, true),
@@ -44,6 +44,8 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
 
+        /* Find and prepare buttons */
+
         // Set true button functionality and update question upon correct answer
         mTrueButton = (Button) findViewById(R.id.true_button);
         mTrueButton.setOnClickListener(new View.OnClickListener() {
@@ -69,6 +71,18 @@ public class QuizActivity extends AppCompatActivity {
                 }
             }
         });
+
+        // Set cheat button functionality to activate the CheatActivity
+        mCheatButton = (Button) findViewById(R.id.cheat_button);
+        mCheatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+
+        /* Find and prepare image buttons */
 
         // Set next button functionality
         ImageButton nextButton = (ImageButton) findViewById(R.id.next_button);
