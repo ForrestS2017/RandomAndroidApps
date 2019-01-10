@@ -13,7 +13,6 @@ public class CrimeLab {
 
     private CrimeLab(Context context) {
         mCrimes = new ArrayList<>();
-
         // TODO: Replace following filler code
 
         for (int i = 0; i < 100; i++) {
@@ -25,7 +24,7 @@ public class CrimeLab {
 
     }
 
-    private List<Crime> getCrimes() {
+    public List<Crime> getCrimes() {
         return mCrimes;
     }
 
@@ -37,7 +36,12 @@ public class CrimeLab {
         return null;
     }
 
-    private static CrimeLab get(Context context) {
+    /**
+     * Get CrimeLab instance
+     * @param context viewContext
+     * @return instance of CrimeLab
+     */
+    public static CrimeLab get(Context context) {
         if (sCrimeLab == null) {
             sCrimeLab = new CrimeLab(context);
         }
