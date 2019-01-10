@@ -1,5 +1,6 @@
 package com.example.fsmit.geoquiz;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,7 @@ public class QuizActivity extends AppCompatActivity {
 
     private static final String TAG = "QuizActivity";
     private static final String KEY_INDEX = "index";
+    private static final int REQUEST_CODE_CHEAT = 0;
 
     private Button mTrueButton, mFalseButton, mCheatButton;
     private TextView mQuestionTextView;
@@ -28,6 +30,7 @@ public class QuizActivity extends AppCompatActivity {
 
     private int mCurrentIndex = 0;
     private int totalQuestions, totalCorrect = 0;
+    private boolean mIsCheater;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +87,8 @@ public class QuizActivity extends AppCompatActivity {
                 ).show();
                 boolean answerIsTrue = mQuestionBank[mCurrentIndex].isAnswerTrue();
                 Intent intent = CheatActivity.newIntent(QuizActivity.this, answerIsTrue);
-                startActivity(intent);
+                startActivityForResult(intent, REQUEST_CODE_CHEAT);
+
             }
         });
 
@@ -96,6 +100,7 @@ public class QuizActivity extends AppCompatActivity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mIsCheater = false;
                 updateQuestion(1);
             }
         });
@@ -105,6 +110,7 @@ public class QuizActivity extends AppCompatActivity {
         previousButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mIsCheater = false;
                 updateQuestion(-1);
             }
         });
@@ -120,6 +126,25 @@ public class QuizActivity extends AppCompatActivity {
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putInt(KEY_INDEX, mCurrentIndex);
+    }
+
+    /**
+     * Override for detecting cheating
+     * @param requestCode   Determine if activity was a cheat activity
+     * @param resultCode    Success of child activity
+     * @param data          Returned intent which should hold cheat detection
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK) {
+            return;
+        }
+        if (requestCode == REQUEST_CODE_CHEAT) {
+            if(data == null) {
+                return;
+            }
+            mIsCheater = CheatActivity.wasAnswerShown(data);
+        }
     }
 
     /**
@@ -152,6 +177,10 @@ public class QuizActivity extends AppCompatActivity {
         if( correctAnswer == userPressedTrue) {
             responseID = R.string.correct_toast;
             totalCorrect += 1;
+        }
+
+        if(mIsCheater) {
+            responseID = R.string.judgement_toast;
         }
 
         // Make message to display score. Create a new LinearLayout to center text
