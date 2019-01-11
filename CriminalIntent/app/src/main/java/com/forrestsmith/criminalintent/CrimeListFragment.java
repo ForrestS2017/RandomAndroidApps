@@ -4,6 +4,7 @@
 
 package com.forrestsmith.criminalintent;
 
+import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,6 +78,10 @@ public class CrimeListFragment extends Fragment {
         @Override
         public void onClick(View v) {
             Toast.makeText(getActivity(), mCrime.getTitle() + " clicked!!", Toast.LENGTH_LONG).show();
+
+            Intent intent = CrimeActivity.newIntent(getActivity(), mCrime.getId()); // We passed in the hosting activity as the Context
+            Log.d(getActivity().toString(), "id: " + mCrime.getId());
+            startActivity(intent);
         }
 
         /**

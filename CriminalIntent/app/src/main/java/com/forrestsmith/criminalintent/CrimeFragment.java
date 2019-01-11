@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+
+import java.util.UUID;
 
 public class CrimeFragment extends Fragment {
 
@@ -29,7 +32,15 @@ public class CrimeFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mCrime = new Crime();
+        UUID crimeId = (UUID) getActivity().getIntent().getSerializableExtra(CrimeActivity.EXTRA_CRIME_ID);
+        if (crimeId == null) {
+            Log.d("CrimeFragment.onCreate", "no id!!");
+            mCrime = new Crime();
+        } else {
+            mCrime = CrimeLab.get(getActivity()).getCrime(crimeId);
+            Log.d("CrimeFragment.onCreate", "id: "+ crimeId);
+        }
+        //Log.d("CrimeFragment.onCreate", "id: " + (crimeId != null ? crimeId : "id = null"));
     }
 
     @Nullable
@@ -41,6 +52,7 @@ public class CrimeFragment extends Fragment {
         // Wire the Title Widget
 
         mTitleField = (EditText) v.findViewById(R.id.crime_title);
+        mTitleField.setText(mCrime.getTitle());
         mTitleField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -67,6 +79,7 @@ public class CrimeFragment extends Fragment {
         // Wire the Solved Checkbox Widget
 
         mSolvedCheckBox = (CheckBox) v.findViewById(R.id.crime_solved);
+        mSolvedCheckBox.setChecked(mCrime.isSolved());
         mSolvedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
