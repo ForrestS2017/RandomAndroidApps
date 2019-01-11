@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -45,9 +46,9 @@ public class CrimeListFragment extends Fragment {
     }
 
     /**
-     * ViewHolder subclass to inflate and own the single list item layout
+     * ViewHolder subclass to inflate and own the single list item layout. Holds a Crime whose data is displayed in the TextViews
      */
-    private class CrimeHolder extends RecyclerView.ViewHolder {
+    private class CrimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private TextView mTitleTextView;
         private TextView mDateTextView;
@@ -61,11 +62,21 @@ public class CrimeListFragment extends Fragment {
          */
         public CrimeHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_crime, parent, false));
+            itemView.setOnClickListener(this);
 
             mTitleTextView = (TextView) itemView.findViewById(R.id.crime_title);    // Remember - our view in the viewgroup is referenced by "itemView"
             mDateTextView = (TextView) itemView.findViewById(R.id.crime_date);
         }
 
+        @Override
+        public void onClick(View v) {
+            Toast.makeText(getActivity(), mCrime.getTitle() + " clicked!!", Toast.LENGTH_LONG).show();
+        }
+
+        /**
+         * Bind each crime's CrimeHolder ViewHolder
+         * @param crime the crime list item
+         */
         public void bind(Crime crime) {
             mCrime = crime;
             mTitleTextView.setText(crime.getTitle());
