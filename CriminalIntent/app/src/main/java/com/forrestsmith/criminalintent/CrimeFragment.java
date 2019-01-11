@@ -29,18 +29,14 @@ public class CrimeFragment extends Fragment {
     private Button mDateButton;
     private CheckBox mSolvedCheckBox;
 
+    private static final String ARG_CRIME_ID = "crime_id";
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        UUID crimeId = (UUID) getActivity().getIntent().getSerializableExtra(CrimeActivity.EXTRA_CRIME_ID);
-        if (crimeId == null) {
-            Log.d("CrimeFragment.onCreate", "no id!!");
-            mCrime = new Crime();
-        } else {
-            mCrime = CrimeLab.get(getActivity()).getCrime(crimeId);
-            Log.d("CrimeFragment.onCreate", "id: "+ crimeId);
-        }
-        //Log.d("CrimeFragment.onCreate", "id: " + (crimeId != null ? crimeId : "id = null"));
+        UUID crimeId = (UUID) getArguments().getSerializable(ARG_CRIME_ID);
+        mCrime = CrimeLab.get(getActivity()).getCrime(crimeId);
+        Log.d("CrimeFragment.onCreate", "id: "+ crimeId);
     }
 
     @Nullable
@@ -90,6 +86,20 @@ public class CrimeFragment extends Fragment {
 
 
         return v;
+    }
+
+    /**
+     * Create fragment with argument bundles passed in already
+     * @param crimeId target crime id
+     * @return new fragment with id argument
+     */
+    public static CrimeFragment newInstance(UUID crimeId) {
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_CRIME_ID, crimeId);
+
+        CrimeFragment fragment = new CrimeFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
 

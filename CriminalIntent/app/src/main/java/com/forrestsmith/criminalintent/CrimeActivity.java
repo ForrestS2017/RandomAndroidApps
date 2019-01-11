@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public class CrimeActivity extends SingleFragmentActivity {
 
-    public static final String EXTRA_CRIME_ID = "com.forrestsmith.criminalintent.crime_id";
+    private static final String EXTRA_CRIME_ID = "com.forrestsmith.criminalintent.crime_id";
 
     /**
      * Custom Intent creation - we use the UUID crimeID to pull the correct Crime from our list
@@ -23,8 +23,13 @@ public class CrimeActivity extends SingleFragmentActivity {
     }
 
 
+    /**
+     * Calls CrimeFragment.newInstance to pass in id as argument bundle
+     * @return new instance with proper arguments
+     */
     @Override
     protected Fragment createFragment() {
-        return new CrimeFragment();
+        UUID crimeId = (UUID) getIntent().getSerializableExtra(EXTRA_CRIME_ID);
+        return CrimeFragment.newInstance(crimeId);
     }
 }
