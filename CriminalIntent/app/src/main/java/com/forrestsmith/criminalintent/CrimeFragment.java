@@ -1,3 +1,8 @@
+/**
+ * This class is the details pane of a selected crime. Editing for title, date, details, image(s) allowed
+ * @author Forrest Smith
+ */
+
 package com.forrestsmith.criminalintent;
 
 import android.os.Bundle;

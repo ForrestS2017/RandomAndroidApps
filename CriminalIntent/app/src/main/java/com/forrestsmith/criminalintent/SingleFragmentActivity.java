@@ -1,3 +1,7 @@
+/**
+ * Custom abstract class for easy fragment creation
+ */
+
 package com.forrestsmith.criminalintent;
 
 import android.os.Bundle;

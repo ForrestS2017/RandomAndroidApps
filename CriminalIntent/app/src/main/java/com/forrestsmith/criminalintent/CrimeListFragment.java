@@ -1,3 +1,7 @@
+/**
+ * This class will create fragments to display the list of crimes specified by CrimeLab
+ */
+
 package com.forrestsmith.criminalintent;
 
 import android.os.Bundle;
@@ -6,10 +10,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -41,11 +45,31 @@ public class CrimeListFragment extends Fragment {
     }
 
     /**
-     * ViewHolder subclass to inflate and own the list item layout
+     * ViewHolder subclass to inflate and own the single list item layout
      */
     private class CrimeHolder extends RecyclerView.ViewHolder {
+
+        private TextView mTitleTextView;
+        private TextView mDateTextView;
+
+        private Crime mCrime;
+
+        /**
+         * Constructor of the fragment to list all crimes
+         * @param inflater RecyledView inflator
+         * @param parent CrimeActivity
+         */
         public CrimeHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_crime, parent, false));
+
+            mTitleTextView = (TextView) itemView.findViewById(R.id.crime_title);    // Remember - our view in the viewgroup is referenced by "itemView"
+            mDateTextView = (TextView) itemView.findViewById(R.id.crime_date);
+        }
+
+        public void bind(Crime crime) {
+            mCrime = crime;
+            mTitleTextView.setText(crime.getTitle());
+            mDateTextView.setText(crime.getDate().toString());
         }
     }
 
@@ -68,7 +92,8 @@ public class CrimeListFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(CrimeHolder holder, int position) {
-            // This is temporarily left blank
+            Crime crime = mCrimes.get(position);
+            holder.bind(crime);
         }
 
         @Override

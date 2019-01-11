@@ -1,3 +1,7 @@
+/**
+ * This model class holds a list of crimes
+ */
+
 package com.forrestsmith.criminalintent;
 
 import android.content.Context;

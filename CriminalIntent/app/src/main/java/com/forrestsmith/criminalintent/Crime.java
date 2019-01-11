@@ -1,3 +1,8 @@
+/**
+ * This is a model for each crime, representing an ID, title, date, and solved status
+ * @author Forrest Smith
+ */
+
 package com.forrestsmith.criminalintent;
 
 import java.util.Date;
