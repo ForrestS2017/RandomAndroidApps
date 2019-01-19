@@ -91,8 +91,7 @@ public class CrimeListFragment extends Fragment {
         public void onClick(View v) {
             Toast.makeText(getActivity(), mCrime.getTitle() + " clicked!!", Toast.LENGTH_LONG).show();
 
-            Intent intent = CrimeActivity.newIntent(getActivity(), mCrime.getId()); // We passed in the hosting activity as the Context
-            Log.d(getActivity().toString(), "id: " + mCrime.getId());
+            Intent intent = CrimePagerActivity.newIntent(getActivity(), mCrime.getId()); // We passed in the hosting activity as the Context
             startActivity(intent);
         }
 
